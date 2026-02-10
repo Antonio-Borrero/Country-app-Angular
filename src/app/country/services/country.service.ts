@@ -17,7 +17,7 @@ export class CountryService {
 
     return this.http.get<RESTCountry[]>(`${environment.apiUrl}/capital/${query}`)
       .pipe(
-        map(CountryMapper.mapRestCountryArrayToCountryArray)
+        map(restCountries => CountryMapper.mapRestCountryArrayToCountryArray(restCountries))
       )
   }
 
