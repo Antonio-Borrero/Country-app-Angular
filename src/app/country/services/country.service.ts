@@ -12,6 +12,19 @@ import { CountryMapper } from '../mappers/country.mapper';
 export class CountryService {
   private http = inject(HttpClient)
 
+  searchByCountry(query: string): Observable<Country[]> {
+    query = query.toLocaleLowerCase();
+
+    return this.http.get<RESTCountry[]>(`${environment.apiUrl}/name/${query}`)
+      .pipe(
+        map(restCountries => CountryMapper.mapRestCountryArrayToCountryArray(restCountries)),
+        catchError(error => {
+          console.log("Error fetching: ", error);
+          return throwError(() => new Error(`No se pudo obtener países con "${query}"`))
+        })
+      )
+  }
+
   searchByCapital(query: string): Observable<Country[]> {
     query = query.toLocaleLowerCase();
 
@@ -24,5 +37,4 @@ export class CountryService {
         })
       )
   }
-
 }
