@@ -1,4 +1,36 @@
-<section class="mx-10">
-    <h1 class="text-3xl">{{country().name}}</h1>
-    <h2 class="text-xl font-thin">Población: {{country().population | number}}</h2>
+<section class="m-10 flex flex-col items-center">
+    <div class="stats">
+
+        <div class="stat place-items-center">
+            <div class="stat-title">Bandera</div>
+            <img [src]="country().flagSvg" [alt]="country().flagSvg" class="stat-value w-20 mt-2 rounded-sm">
+        </div>
+
+        <div class="stat place-items-center">
+            <div class="stat-title">Código</div>
+            <div class="stat-value">{{country().cca2}}</div>
+        </div>
+
+        <div class="stat place-items-center">
+            <div class="stat-title">País</div>
+            <div class="stat-value">{{country().name}}</div>
+        </div>
+
+        <div class="stat place-items-center">
+            <div class="stat-title">Capital</div>
+            <div class="stat-value">{{country().capital}}</div>
+        </div>
+
+        <div class="stat place-items-center">
+            <div class="stat-title">Sub region</div>
+            <div class="stat-value">{{country().subRegion}}</div>
+        </div>
+
+        <div class="stat place-items-center">
+            <div class="stat-title">Población</div>
+            <div class="stat-value text-secondary">{{country().population | number}}</div>
+        </div>
+
+    </div>
+    <a (click)="goBack()" class="link-primary cursor-pointer mt-5">Regresar</a>
 </section>
