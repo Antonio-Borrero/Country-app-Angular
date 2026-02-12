@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { RESTCountry } from '../interfaces/rest-countries.interfaces';
-import { map, Observable, catchError, throwError } from 'rxjs';
+import { map, Observable, catchError, throwError, delay } from 'rxjs';
 import type { Country } from '../interfaces/country.interface';
 import { CountryMapper } from '../mappers/country.mapper';
 
@@ -12,7 +12,7 @@ import { CountryMapper } from '../mappers/country.mapper';
 export class CountryService {
   private http = inject(HttpClient)
 
-  searchByCountry(query: string): Observable<Country[]> {
+  searchByCountry(query: string) {
     query = query.toLocaleLowerCase();
 
     return this.http.get<RESTCountry[]>(`${environment.apiUrl}/name/${query}`)
@@ -25,7 +25,7 @@ export class CountryService {
       )
   }
 
-  searchByCapital(query: string): Observable<Country[]> {
+  searchByCapital(query: string) {
     query = query.toLocaleLowerCase();
 
     return this.http.get<RESTCountry[]>(`${environment.apiUrl}/capital/${query}`)
@@ -34,6 +34,19 @@ export class CountryService {
         catchError(error => {
           console.log("Error fetching: ", error);
           return throwError(() => new Error(`No se pudo obtener países con "${query}"`))
+        })
+      )
+  }
+
+  searchByCode(code: string) {
+
+    return this.http.get<RESTCountry[]>(`${environment.apiUrl}/alpha/${code}`)
+      .pipe(
+        map((restCountries) => CountryMapper.mapRestCountryArrayToCountryArray(restCountries)),
+        map((countries) => countries.at(0)),
+        catchError((error) => {
+          console.log("Error fetching: ", error);
+          return throwError(() => new Error(`No se pudo obtener países con "${code}"`))
         })
       )
   }
