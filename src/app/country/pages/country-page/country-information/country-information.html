@@ -2,16 +2,6 @@
     <div class="stats">
 
         <div class="stat place-items-center">
-            <div class="stat-title">Bandera</div>
-            <img [src]="country().flagSvg" [alt]="country().flagSvg" class="stat-value w-20 mt-2 rounded-sm">
-        </div>
-
-        <div class="stat place-items-center">
-            <div class="stat-title">Código</div>
-            <div class="stat-value">{{country().cca2}}</div>
-        </div>
-
-        <div class="stat place-items-center">
             <div class="stat-title">País</div>
             <div class="stat-value">{{country().name}}</div>
         </div>
@@ -32,5 +22,14 @@
         </div>
 
     </div>
+    <figure class="diff aspect-video mt-5" tabindex="0">
+        <div class="diff-item-1 blur" role="img" tabindex="0">
+            <img [alt]="country().name" [src]="country().flagSvg" />
+        </div>
+        <div class="diff-item-2" role="img">
+            <img [alt]="country().name" [src]="country().flagSvg" />
+        </div>
+        <div class="diff-resizer"></div>
+    </figure>
     <a (click)="goBack()" class="link-primary cursor-pointer mt-5">Regresar</a>
 </section>
